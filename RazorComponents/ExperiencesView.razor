@@ -1,0 +1,37 @@
+﻿@using Portfolio.Data.Models.Interface
+@using Portfolio.Data.Models
+@inject IPortfolioApi _api
+
+<section class="section-padding" id="Works">
+    <div class="box row">
+        <NavIndicator Text="EXPÉRIENCES" Ico="Briefcase" />
+
+        <p class="title important-text mt-5 mb-4">Mes Expériences <span class="colored-text">Professionnelles</span></p>
+
+        <div class="timeline">
+            @foreach (var e in experiences)
+            {
+                <TimelineComponent Element="@e" />
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    protected List<Experience> experiences = new List<Experience>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var experiencesNonSorted = await _api.GetExperiencesAsync();
+        if(experiencesNonSorted != null)
+        {
+            experiences = experiencesNonSorted.OrderByDescending(e => e.Id).ToList();
+        }
+        else
+        {
+            experiences = new List<Experience>();
+        }
+        await base.OnInitializedAsync();
+    }
+}
+

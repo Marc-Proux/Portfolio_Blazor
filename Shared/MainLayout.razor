@@ -1,0 +1,18 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Portfolio</PageTitle>
+
+@Body
+
+@code{
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeTooltips");
+            await JSRuntime.InvokeVoidAsync("initializeScrollSpy");
+        }
+    }
+}

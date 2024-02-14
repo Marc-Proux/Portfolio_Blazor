@@ -1,0 +1,31 @@
+﻿@page "/"
+@using Portfolio.Data.Models
+@using Portfolio.Pages
+
+<PageTitle>Marc Proux</PageTitle>
+
+<main class="page row" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="0" tabindex="0">
+    <div class="sidebar col-12 col-lg-4 col-xl-3">
+        <InfoCard />
+    </div>
+
+    <div class="col-12 col-lg-8 offset-lg-4 offset-xl-3 content">
+        <Intro />
+        <About />
+        <Skills />
+        <SoftSkills />
+        <FormationsView />
+        <ExperiencesView />
+        <ProjectsView />
+        <Contact />
+        <Footer />
+    </div>
+
+    <div class="navsidebar d-none d-xl-block col-xl-1 justify-content-end">
+        <NavBar />
+    </div>
+</main>
+
+@code{
+
+}

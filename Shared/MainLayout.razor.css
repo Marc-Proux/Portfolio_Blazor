@@ -1,0 +1,19 @@
+﻿.sidebar, .navsidebar {
+    height: 92vh;
+    position: sticky;
+    top:0;
+    padding-top: 8vh;
+}
+
+.page {
+    /*    background-color: rgb(24, 25, 26);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
+    background-size: 30px 30px;
+    background-position: -5px -5px*/
+    background: rgb(24, 25, 26);
+    --gap: 5em;
+    --line: 1px;
+    --color: rgba(255, 255, 255, 0.2);
+    background-image: linear-gradient( -90deg, transparent calc(var(--gap) - var(--line)), var(--color) calc(var(--gap) - var(--line) + 1px), var(--color) var(--gap) ), linear-gradient( 0deg, transparent calc(var(--gap) - var(--line)), var(--color) calc(var(--gap) - var(--line) + 1px), var(--color) var(--gap) );
+    background-size: var(--gap) var(--gap);
+}

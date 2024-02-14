@@ -1,0 +1,70 @@
+﻿<section id="About" class="section-padding">
+    <div class="box">
+        <NavIndicator Text="PROFIL" Ico="Person" />
+
+        <p class="title important-text mt-5 mb-4">Mon <span class="colored-text">Profil</span></p>
+
+        <div class="fs-6">
+            Je suis étudiant en @studyYears&#8205ème année d'<span class="important-text">Informatique et Réseaux</span> à l'École
+            Nationale Supérieur d'Ingénieurs Sud Alsace (<a class="colored-text" href="https://www.ensisa.uha.fr/" target="_blank">ENSISA</a>).
+            Également alternant au poste d'<span class="important-text">Analyste Développeur</span> au sein d'<a class="colored-text" href="https://www.e-i.com/fr/index.html" target="_blank">Euro-Information</a>
+            je me spécialise dans la conception de logiciels et d'applications web.
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-6">
+                <div class="d-flex items-center mb-2">
+                    <span class="flex-el1 important-text">Age</span>
+                    <span class="flex-el2">:</span>
+                    <span>@age ans</span>
+                </div>
+
+                <div class="d-flex items-center mb-2">
+                    <span class="flex-el1 important-text">Téléphone</span>
+                    <span class="flex-el2">:</span>
+                    <span>06 <!--BOT!--ONLY!-->12 <!--BOT!--BATE!-->55 <!--NOT4ROBOT!-->68 <!--UCANT6ME!-->30<!--H!DE!--></span>
+                </div>
+
+                <div class="d-flex items-center mb-2">
+                    <span class="flex-el1 important-text">Langues</span>
+                    <span class="flex-el2">:</span>
+                    <span>Français, Anglais</span>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="d-flex items-center mb-2">
+                    <span class="flex-el1 important-text">Adresse</span>
+                    <span class="flex-el2">:</span>
+                    <span>Mulhouse</span>
+                </div>
+
+                <div class="d-flex items-center mb-2">
+                    <span class="flex-el1 important-text">Email</span>
+                    <span class="flex-el2">:</span>
+                    <span>proux<!--BOT!--ONLY!-->marc<!--BOT!--BATE!-->@@<!--NOT4ROBOT!-->gmail<!--UCANT6ME!-->.<!--H!DE!-->com</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@code {
+    private string studyYears = "4";
+
+    private string age = String.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        DateTime birthdate = new DateTime(2002, 6, 3);
+        DateTime today = DateTime.Today;
+        int ageInt = today.Year - birthdate.Year;
+        if (birthdate.Date > today.AddYears(-ageInt)) ageInt--;
+        age = ageInt.ToString();
+    }
+
+}
+

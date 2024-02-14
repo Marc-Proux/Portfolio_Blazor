@@ -1,0 +1,52 @@
+@using Enum;
+
+<div class="my-modal-container" @onclick="@Close" style="@ContainerStyle">
+    <div class="box row my-modal" @onclick:stopPropagation>
+        <div class="my-modal-header">
+            @switch (Status)
+            {
+                case MessageStatusEnum.Info:
+                    <img src="img/message_icos/ok-circle-svgrepo-com.svg" alt="info" class="my-modal-status"/>
+                    break;
+                case MessageStatusEnum.Warning:
+                    <img src="img/message_icos/danger-circle-svgrepo-com.svg" alt="danger" class="my-modal-status"/>
+                    break;
+                case MessageStatusEnum.Error:
+                    <img src="img/message_icos/error-circle-svgrepo-com.svg" alt="error" class="my-modal-status"/>
+                    break;
+            }
+            <span class="fs-4 important-text">@Title</span>
+        </div>
+        <div class="my-modal-content">
+            @Message
+        </div>
+
+        <div class="close-button-container">
+            <button class="button" @onclick="Close">
+                <span class="X"></span>
+                <span class="Y"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool Show { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = String.Empty;
+
+    [Parameter]
+    public string Message { get; set; } = String.Empty;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> Close { get; set; }
+
+   [Parameter]
+   public MessageStatusEnum Status { get; set; } = MessageStatusEnum.Info;
+
+    public string ContainerStyle => Show ?
+        "opacity: 1; visibility: visible; transition: opacity 0.2s, visibility 0s 0s;" :
+        "opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0s 0.2s;";
+}

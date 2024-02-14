@@ -1,0 +1,22 @@
+﻿@using Portfolio.Data.Models
+@using Markdig;
+
+<div class="d-flex flex-column flex-sm-row timeline-container">
+    <div class="d-flex flex-sm-column timeline-informations justify-content-between justify-content-sm-start">
+        <span class="important-text">@Element.Location</span>
+        <span class="colored-text">@Element.Date</span>
+    </div>
+
+    <div class="d-flex flex-column timeline-description">
+        <span class="important-text timeline-description-title">@Element.Title</span>
+        @((MarkupString)Markdig.Markdown.ToHtml(Element.Text, pipeline))
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public TimelineElement Element { get; set; } = new TimelineElement();
+
+    MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
+}
+

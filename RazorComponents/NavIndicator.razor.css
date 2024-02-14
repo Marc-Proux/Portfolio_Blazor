@@ -1,0 +1,11 @@
+﻿.nav-indicator {
+    border-radius: 20px;
+    border: 1px solid #2d2e2f;
+    width: 10rem;
+    text-align: center;
+    font-size: 0.75em;
+}
+
+.nav-indicator i{
+    visibility:hidden;
+}

@@ -1,0 +1,32 @@
+﻿@using Portfolio.Data.Models
+
+<ProjectModal Show="@showDialog" Element="@Element" Close="@DialogCloseHandler" />
+
+<div class="col-12 col-sm-6 d-flex justify-content-center mb-4" @onclick="@OpenDialog">
+    <div class="project-container d-flex flex-column">
+
+        <div class="project-img-container">
+            <img src="@Element.Path" class="project-image" />
+        </div>
+
+        <span class="colored-text project-type">@Element.Type</span>
+        <span class="important-text project-title">@Element.Title</span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public Project Element { get; set; } = new Project();
+
+    private bool showDialog = false;
+
+    private void OpenDialog()
+    {
+        showDialog = true;
+    }
+
+    private void DialogCloseHandler(MouseEventArgs e)
+    {
+        showDialog = false;
+    }
+}
