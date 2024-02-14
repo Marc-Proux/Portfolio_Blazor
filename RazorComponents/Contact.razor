@@ -38,7 +38,7 @@
             </ul>
         </div>
         <div class="col-12 col-md-7" id="contact-form">
-            <EditForm Model="ContactForm" OnValidSubmit="SubmitForm" OnInvalidSubmit="TestModal">
+            <EditForm Model="ContactForm" OnValidSubmit="SubmitForm">
                 <DataAnnotationsValidator />
                 <CustomCssClassProvider ProviderType="BootstrapFieldCssClassProvider" />
 
@@ -76,13 +76,6 @@
         sanitizedInput = sanitizedInput.Replace("\n", "<br/>");
         return sanitizedInput;
     }
-
-    private void TestModal()
-    {
-        Console.WriteLine("Invalid");
-        showDialog = true;
-    }
-    
 
 
     private async Task SubmitForm()
