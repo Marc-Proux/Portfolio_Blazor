@@ -1,0 +1,22 @@
+﻿<div class="nav-indicator py-1">
+    <Icon Name="@IconName" Size="IconSize.x6" Class="colored-text"/> &nbsp;<span class="important-text">@Text</span>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = String.Empty;
+
+    [Parameter, EditorRequired]
+    public string Ico { get; set; } = String.Empty;
+
+    private IconName IconName;
+
+    protected override void OnParametersSet()
+    {
+        if(Enum.TryParse(Ico, out IconName result))
+        {
+            IconName = result;
+        }
+    }
+}
+

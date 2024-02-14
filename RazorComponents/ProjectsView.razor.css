@@ -1,0 +1,4 @@
+﻿#Portfolio > div{
+    padding-bottom: 1rem !important;
+    margin-left: calc(-.5 * 1.5rem);
+}

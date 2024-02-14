@@ -1,0 +1,33 @@
+﻿@media screen and (min-width: 1px){
+    #intro-image {
+        width: 15rem;
+    }
+}
+
+@media screen and (min-width: 576px){
+    #intro-image {
+        width: 20rem;
+    }
+}
+
+@media screen and (min-width: 768px){
+    #Intro {
+        padding: 5rem 3rem;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #Intro {
+        padding: 13vh 0 15vh 0;
+    }
+
+    #intro-image {
+        width: 15rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #intro-image {
+        width: 20rem;
+    } 
+}

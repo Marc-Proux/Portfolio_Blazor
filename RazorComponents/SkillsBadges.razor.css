@@ -1,0 +1,8 @@
+﻿.skills-badge {
+    border: 1px dashed rgb(67, 68, 69);
+    border-radius: 50px;
+    width: 9rem;
+    padding: 0.35em 0.65em;
+    text-align: center;
+    margin: 0.5rem 0.5rem;
+}

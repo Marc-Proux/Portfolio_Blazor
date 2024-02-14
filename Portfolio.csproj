@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>7db56e1a-9503-45cb-8d9b-8cd38e32b8a7</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <PackageReference Include="Blazor.Bootstrap" Version="1.10.5" />
+    <PackageReference Include="BlazorTypewriter" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
+    <PackageReference Include="Markdig" Version="0.34.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="RazorComponents\" />
+    <None Remove="Data\" />
+    <None Remove="Data\Models\" />
+    <None Remove="Data\Models\Interface\" />
+    <None Remove="Data\Experiences\" />
+    <None Remove="Data\Projects\" />
+    <None Remove="Pages\Public\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RazorComponents\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="Data\" />
+    <Folder Include="Data\Models\" />
+    <Folder Include="Data\Models\Interface\" />
+    <Folder Include="Data\Experiences\" />
+    <Folder Include="Data\Projects\" />
+    <Folder Include="Pages\Public\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\" />
+  </ItemGroup>
+</Project>

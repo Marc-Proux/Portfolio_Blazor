@@ -1,0 +1,147 @@
+﻿.VerticalNavBar {
+    border-radius: 40px;
+    border: 1px solid #2d2e2f;
+    height: 70vh;
+    background-color: rgb(24, 25, 26);
+    margin-right: 3rem;
+}
+
+.nav-link {
+    border-radius: 10000px;
+    aspect-ratio: 1/1;
+    color: white;
+
+}
+
+    .nav-link:hover {
+        background-color: rgb(33, 34, 35);
+        color: rgb(84, 185, 148) !important;
+    }
+
+.active {
+    background-color: rgb(33, 34, 35);
+    color: rgb(84, 185, 148) !important;
+}
+
+/*.navbar-toggler {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transition: 0.5s ease-in-out;
+}
+
+    .navbar-toggler, .navbar-toggler:focus, .navbar-toggler:active, .navbar-toggler-icon:focus {
+        outline: none;
+        box-shadow: none;
+        border: 0;
+        position: relative;
+    }
+
+        .navbar-toggler span {
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-toggler.collapsed .top-bar {
+            position: absolute;
+            top: 0px;
+            transform: rotate(0deg);
+        }
+
+        .navbar-toggler.collapsed .middle-bar {
+            opacity: 1;
+            position: absolute;
+            top: 10px;
+            filter: alpha(opacity=100);
+        }
+
+        .navbar-toggler.collapsed .bottom-bar {
+            position: absolute;
+            top: 20px;
+            transform: rotate(0deg);
+        }
+
+        .navbar-toggler .top-bar {
+            top: inherit;
+            transform: rotate(135deg);
+        }
+
+        .navbar-toggler .middle-bar {
+            opacity: 0;
+            top: inherit;
+            filter: alpha(opacity=0);
+        }
+
+        .navbar-toggler .bottom-bar {
+            top: inherit;
+            transform: rotate(-135deg);
+        }
+
+.toggler-icon {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 1px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+}
+
+.middle-bar {
+    margin-top: 0px;
+}
+
+.navbar-brand {
+    text-decoration: none;
+    cursor: pointer;
+    color: #FFFFFF !important;
+}
+
+.navbar-nav {
+    column-gap: 50px;
+}
+
+    .navbar-nav {
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.2s ease-in;
+        cursor: pointer;
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        -o-transition: all 0.2s ease-in;
+    }
+
+        .navbar-nav .nav-link.active {
+            background-color: rgb(33, 34, 35);
+            color: rgb(84, 185, 148) !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgb(33, 34, 35);
+            color: rgb(84, 185, 148) !important;
+        }
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+.navbar {
+    border-radius: 40px;
+    border: 1px solid #2d2e2f;
+    height: 70vh;
+    background-color: rgb(24, 25, 26);
+}
+
+.nav-link {
+    border-radius: 10000px;
+    aspect-ratio: 1/1;
+    color: white;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+}*/

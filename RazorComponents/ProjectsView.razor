@@ -1,0 +1,31 @@
+﻿@using Portfolio.Data.Models.Interface
+@using Portfolio.Data.Models
+@inject IPortfolioApi _api
+
+<section class="section-padding" id="Portfolio">
+    <div class="box">
+        <NavIndicator Text="PROJETS" Ico="JournalCode" />
+
+        <p class="title important-text mt-5 mb-4">Mes <span class="colored-text">Projets</span></p>
+
+        <div class="row projects">
+            @foreach (var p in projects)
+            {
+                <ProjectComponent Element="@p" />
+            }
+        </div>
+    </div>
+</section>
+
+@code{
+    protected List<Project> projects = new List<Project>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if((projects = await _api.GetProjectsAsync()) == null)
+        {
+            projects = new List<Project>();
+        }
+        await base.OnInitializedAsync();
+    }
+}

@@ -1,0 +1,123 @@
+﻿@inject IJSRuntime JSRuntime;
+@using Portfolio.Model.Smtp;
+@inject IEmailService EmailService;
+@using Enum;
+@using Portfolio.Model;
+
+<section class="section-padding" id="Contact">
+    <div class="box row">
+        <NavIndicator Text="CONTACT" Ico="Envelope" />
+
+        <p class="title important-text mt-5 mb-4">Me <span class="colored-text">Contacter</span></p>
+
+        <div class="col-12 col-md-5" id="contact-infos">
+            <ul>
+                <li class="contact-infos-list-el">
+                    <Icon Name="IconName.GeoAlt" Size="IconSize.x1" Class="colored-text" />
+                    <div class="contact-infos-text-container">
+                        <div class="important-text fs-5">Ville</div>
+                        <div>Mulhouse</div>
+                    </div>
+                </li>
+
+                <li class="contact-infos-list-el mt-5">
+                    <Icon Name="IconName.Envelope" Size="IconSize.x1" Class="colored-text" />
+                    <div class="contact-infos-text-container">
+                        <div class="important-text fs-5">Email</div>
+                        <div>contact<!--BOT!--ONLY!-->@@<!--BOT!--BATE!-->marc<!--NOT4ROBOT!-->proux<!--UCANT6ME!-->.<!--H!DE!-->com</div>
+                    </div>
+                </li>
+
+                <li class="contact-infos-list-el mt-5">
+                    <Icon Name="IconName.Phone" Size="IconSize.x1" Class="colored-text" />
+                    <div class="contact-infos-text-container">
+                        <div class="important-text fs-4">Téléphone</div>
+                        <div>06 <!--BOT!--ONLY!-->12 <!--BOT!--BATE!-->55 <!--NOT4ROBOT!-->68 <!--UCANT6ME!-->30<!--H!DE!--></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-7" id="contact-form">
+            <EditForm Model="ContactForm" OnValidSubmit="SubmitForm">
+                <DataAnnotationsValidator />
+                <CustomCssClassProvider ProviderType="BootstrapFieldCssClassProvider" />
+
+                <InputText @bind-Value="@ContactForm.Name" placeholder="Nom" type="text" autocomplete="name"/>
+                <ValidationMessage For="@(()=>ContactForm.Name)" />
+
+                <InputText @bind-Value="@ContactForm.Email" placeholder="Email" class="mt-4" type="email" autocomplete="email"/>
+                <ValidationMessage For="@(()=>ContactForm.Email)" />
+
+                <InputTextArea @bind-Value="@ContactForm.Message" placeholder="Message" class="form-input-message mt-4" />
+                <ValidationMessage For="@(()=>ContactForm.Message)" />
+
+                <button class="button-theme fs-6 important-text py-2 mt-5" style="width:10rem" type="submit">
+                    Enoyer
+                </button>
+            </EditForm>
+        </div>
+    </div>
+    <MyModal Show="@showDialog" Title="Message Envoyé" Message="Votre message a bien été envoyé. Vous recevrez un email de confirmation." Status="@MessageStatusEnum.Info" Close="@DialogCloseHandler" />
+</section>
+
+@code{
+    public ContactForm ContactForm = new ContactForm();
+
+    private bool showDialog = false;
+
+    private void DialogCloseHandler(MouseEventArgs e)
+    {
+        showDialog = false;
+    }
+
+    public static string SanitizeHtmlAndPreserveBreaks(string input)
+    {
+        var sanitizedInput = System.Net.WebUtility.HtmlEncode(input);
+        sanitizedInput = sanitizedInput.Replace("\n", "<br/>");
+        return sanitizedInput;
+    }
+
+
+    private async Task SubmitForm()
+    {
+        string textClean = SanitizeHtmlAndPreserveBreaks(ContactForm.Message);
+        // Construire le message
+        string messageToMe = $@"
+                            <html>
+                                <body>
+                                    <div>Bonjour Monsieur,</div><br/>
+                                    <div>Vous avez reçu un nouveau message de <span style='color: rgb(84, 185, 148)'>{ContactForm.Name}</span> via le portfolio.</div><br/>
+                                    <div>Voici son message :</div>
+                                    <div style='border-top: 1px solid; border-bottom: 1px solid; margin:5px auto; padding: 5px 5px; width: 90%;'>{textClean}</div><br/>
+                                    <div>Voici son adresse mail :</div>
+                                    <div>{ContactForm.Email}</div><br/>
+                                    <div>Demeter</div>
+                                </body>
+                            </html>";
+
+        string messageToOther = $@"
+                            <html>
+                                <div>Cher/Chère {ContactForm.Name},</div><br/>
+                                <div>Je vous remercie chaleureusement d'avoir pris le temps de me contacter et pour l'intérêt que vous portez à mon portfolio. Votre message a bien été reçu.</div><br/>
+                                <div>Je tiens à vous informer que je prends connaissance de votre demande et que je vous répondrai dans les plus brefs délais. Votre patience est grandement appréciée.</div><br/>
+                                <div>Voici le détail des informations qui m'ont été transmises :</div>
+                                <div>Nom : {ContactForm.Name}</div>
+                                <div>Adresse mail : {ContactForm.Email}</div>
+                                <div>Votre message :</div>
+                                <div style='border-top: 1px solid; border-bottom: 1px solid; margin:5px auto; padding: 5px 5px; width: 90%;'>{textClean}</div><br/>
+                                <div>Je reste à votre disposition pour toute question supplémentaire ou demande d'information. Dans l'attente de notre échange à venir, je vous adresse mes meilleures salutations.</div><br/>
+                                <div>Cordialement,</div>
+                                <div>Proux Marc</div>
+                            </html>";
+
+
+        // Envoyer l'email
+        await EmailService.SendEmailAsync("Contact via le Portfolio", messageToMe);
+        await EmailService.SendEmailAsync("Merci de m'avoir contacté", messageToOther, to: ContactForm.Email);
+
+        // Afficher la boîte de dialogue de confirmation et réinitialiser le formulaire
+        showDialog = true;
+        ContactForm = new ContactForm();
+    }
+
+}

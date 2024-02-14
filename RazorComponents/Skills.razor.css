@@ -1,0 +1,11 @@
+﻿.items-center {
+    align-items: center;
+}
+
+.flex-el1 {
+    flex: 0 0 6rem;
+}
+
+.flex-el2 {
+    flex: 0 0 2rem
+}
