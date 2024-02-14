@@ -1,0 +1,31 @@
+﻿@inject IJSRuntime JSRuntime
+
+<section id="Intro" class="section-padding">
+    <div class="box row">
+        <div class="col-12 col-lg-7">
+            <NavIndicator Text="ACCUEIL" Ico="HouseDoor" />
+
+            <div class="title important-text fw-bold my-5">Alternant<br /><span class="colored-text">Analyste Dévelopeur</span></div>
+
+            <div class="fs-6">
+                Je suis un élève <span class="important-text">ingénieur en alternance</span> passionné de développement informatique.
+                J'utilise mes compétences dans la réalisation de projets professionnels et personnels.
+            </div>
+
+            <button class="button-theme fs-6 important-text mt-5 py-2" style="width:20vh" @onclick=@ScrollToContact>
+                Contact &nbsp;<Icon Name="IconName.Send" Size="IconSize.x6" Color="IconColor.White" />
+            </button>
+        </div>
+        <div class="mt-5 mt-sm-0 col-12 col-lg-5 d-flex flex-column align-items-center">
+            <img src="/../img/intro.png" id="intro-image" class="my-auto">
+        </div>
+    </div>
+</section>
+
+@code {
+    private async Task ScrollToContact()
+    {
+        await JSRuntime.InvokeVoidAsync("scrollToSection", "Contact");
+    }
+}
+

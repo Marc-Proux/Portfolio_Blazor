@@ -1,0 +1,19 @@
+﻿.progress-div{
+    margin: 1rem 0;
+}
+
+    .progress-div > div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+.progress {
+    padding: 0 !important;
+    border-radius: 50px !important;
+    background-color: rgb(67, 68, 69) !important;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, rgba(4,85,126,1) 0%, rgba(84,185,148,1) 100%) !important;
+    border-radius: 50px !important;
+}

@@ -1,0 +1,87 @@
+﻿@inject IJSRuntime JS
+
+<div class="row mx-auto ms-lg-1" id="MyInfo-container" style="height:100%;">
+    <div class="col-11 box center-content p-3" id=MyInfo>
+
+        <div class="profile-picture mb-2">
+            <img src="@profilPicture" alt="Marc Proux" />
+        </div>
+
+        <div class="important-text fs-3">
+            Marc Proux
+        </div>
+
+        <div>
+            <Typewriter Builder="@typewriter" CustomClass="colored-text" />&#8205
+        </div>
+
+        <div class="info my-4 pt-3 px-3">
+            <div><span class="left-align important-text">Pays :</span><span class="right-align">France</span></div>
+            <div><span class="left-align important-text">Ville :</span><span class="right-align">Mulhouse</span></div>
+            <div><span class="left-align important-text">Age :</span><span class="right-align">@age ans</span></div>
+        </div>
+
+
+        <div class="skills-box row p-3">
+            <div class="col-12 important-text">
+                Compétences
+            </div>
+
+            <div class="col-3 my-3 d-flex flex-column align-items-center">
+                <img src="/../img/ico/csharp.svg" />
+                <span class="my-2">C#</span>
+            </div>
+            <div class="col-3 my-3 d-flex flex-column align-items-center">
+                <img src="/../img/ico/python.svg" />
+                <span class="my-2">Python</span>
+            </div>
+            <div class="col-3 my-3 d-flex flex-column align-items-center">
+                <img src="/../img/ico/java.svg" />
+                <span class="my-2">Java</span>
+            </div>
+            <div class="col-3 my-3 d-flex flex-column align-items-center">
+                <img src="/../img/ico/cpp.svg" />
+                <span class="my-2">C++</span>
+            </div>
+
+            <button @onclick="DownloadCV" class="button-theme col-12 fs-4 important-text">
+                CV   <Icon Name="IconName.CloudDownload" Size="IconSize.x5" Color="IconColor.White" />
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string profilPicture = $"/../img/profile-picture.jpg";
+
+    private string age = String.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        DateTime birthdate = new DateTime(2002, 6, 3);
+        DateTime today = DateTime.Today;
+        int ageInt = today.Year - birthdate.Year;
+        if (birthdate.Date > today.AddYears(-ageInt)) ageInt--;
+        age = ageInt.ToString();
+    }
+
+    TypewriterBuilder typewriter = new TypewriterBuilder(defaultCharacterPause: 6)
+    .TypeString("Etudiant Ingénieur Informatique", 50)
+    .Pause(1000)
+    .Delete(12, 50)
+    .TypeString("Logiciel", 50)
+    .Pause(1000)
+    .DeleteAll(50)
+    .TypeString("Alternant Analyste Développeur", 50)
+    .Pause(1000)
+    .DeleteAll(50)
+    .Loop();
+
+    private async Task DownloadCV()
+    {
+        var fileName = "doc/cv.pdf";
+        await JS.InvokeVoidAsync("openCv", fileName);
+    }
+}

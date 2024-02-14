@@ -1,0 +1,43 @@
+﻿.contact-infos-text-container{
+    flex: 1 1 0%;
+}
+
+.contact-infos-list-el {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+@media screen and (min-width: 0px) {
+    #contact-infos > ul {
+        padding-left: 2rem;
+    }
+
+    .contact-infos-list-el {
+        gap: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #contact-infos > ul {
+        padding-left: 0;
+    }
+
+    .contact-infos-list-el {
+        gap: 1rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #contact-infos > ul {
+        padding-left: 2rem;
+    }
+
+    .contact-infos-list-el {
+        gap: 1.25rem;
+    }
+}
+
+#Contact{
+    padding-bottom: 0!important;
+}

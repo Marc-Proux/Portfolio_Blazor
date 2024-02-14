@@ -1,0 +1,69 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="VerticalNavBar me-3 p-2">
+    <ul class="nav flex-column center-content" style="height:100%">
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content active" href="#Intro"
+               @onclick='(() => ScrollToSection("Intro"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Accueil">
+                <Icon Name="IconName.HouseDoor" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#About"
+               @onclick='(() => ScrollToSection("About"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Profil">
+                <Icon Name="IconName.Person" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#Skills"
+               @onclick='(() => ScrollToSection("Skills"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Compétences">
+                <Icon Name="IconName.CodeSlash" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#SoftSkills"
+               @onclick='(() => ScrollToSection("SoftSkills"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Soft Skills">
+                <Icon Name="IconName.People" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#Formation"
+               @onclick='(() => ScrollToSection("Formation"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Formations">
+                <Icon Name="IconName.Mortarboard" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#Works"
+               @onclick='(() => ScrollToSection("Works"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Expériences">
+                <Icon Name="IconName.Briefcase" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#Portfolio"
+               @onclick='(() => ScrollToSection("Portfolio"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Projets">
+                <Icon Name="IconName.JournalCode" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+        <li class="nav-item my-auto">
+            <a class="nav-link center-content" href="#Contact"
+               @onclick='(() => ScrollToSection("Contact"))' @onclick:preventDefault
+               data-bs-toggle="tooltip" data-bs-placement="left" title="Contact">
+                <Icon Name="IconName.Envelope" Size="IconSize.x5" Class="nav-ico" />
+            </a>
+        </li>
+    </ul>
+</div>
+
+@code{
+    private async Task ScrollToSection(string sectionID)
+    {
+        await JSRuntime.InvokeVoidAsync("scrollToSection", sectionID);
+    }
+}

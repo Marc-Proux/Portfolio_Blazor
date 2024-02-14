@@ -1,0 +1,13 @@
+﻿<div class="skills-badge d-flex align-items-center">
+    <img src="@Path" />&nbsp;&nbsp;&nbsp;<span class="fs-6">@Title</span>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = String.Empty;
+
+    [Parameter, EditorRequired]
+    public string Path { get; set; } = String.Empty;
+
+}
+

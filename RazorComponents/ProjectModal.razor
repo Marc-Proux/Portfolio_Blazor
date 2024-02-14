@@ -1,0 +1,73 @@
+﻿@using Portfolio.Data.Models
+
+<div class="project-modal-container" @onclick="@Close" style="@ContainerStyle">
+    <div class="box row project-modal" @onclick:stopPropagation>
+        <div class="col-12 col-lg-6 project-img-container d-flex align-items-center">
+            <img src="@Element.Path" class="project-image" />
+        </div>
+
+        <div class="mt-4 mt-lg-0 col-12 col-lg-6 d-flex flex-column" style="max-height:100%">
+            <span class="important-text project-title fs-2">@Element.Title</span>
+            <span class="colored-text project-type">@Element.Type</span>
+            <span class="mt-3 project-description">@Element.Description</span>
+
+            @if (!Element.IsFinished)
+            {
+                <div class="in-progress-tag">
+                    Projet en développement
+                </div>
+            }
+
+            @if (Element.RepoLink != null)
+            {
+                <form action="@Element.RepoLink" method="get" target="_blank" class="row project-repo-link">
+                    <button class="button-theme important-text col-4 d-flex justify-content-center align-items-center" type="submit">
+
+                        Code&nbsp;
+
+                        @if (Element.RepoLink.Contains("github"))
+                        {
+                            <Icon Name="IconName.Github" Size="IconSize.x5" Color="IconColor.White" />
+                        }
+                        else if (Element.RepoLink.Contains("arcadia"))
+                        {
+                            <Icon Name="IconName.Gitlab" Size="IconSize.x5" Color="IconColor.White" />
+                        }
+                        else
+                        {
+                            <Icon Name="IconName.Git" Size="IconSize.x5" Color="IconColor.White" />
+                        }
+
+                    </button>
+                </form>
+            }
+        </div>
+
+        <div class="close-button-container">
+            <button class="button" @onclick="Close">
+                <span class="X"></span>
+                <span class="Y"></span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool Show { get; set; } = false;
+
+    [Parameter]
+    [EditorRequired]
+    public Project Element { get; set; } = new Project();
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<MouseEventArgs> Close { get; set; }
+
+    public string ContainerStyle => Show ?
+        "opacity: 1; visibility: visible; transition: opacity 0.2s, visibility 0s 0s;" :
+        "opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0s 0.2s;";
+
+}
+

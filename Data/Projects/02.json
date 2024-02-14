@@ -1,0 +1,9 @@
+﻿{
+  "Id": 2,
+  "Title": "D-sync",
+  "Path": "/../img/projects/d-sync.png",
+  "Type": "Software",
+  "IsFinished": true,
+  "Description": "D-sync est un projet de fin de semestre de 3ème année d'Ingénieur en Informatique et Réseaux. Il s'agit d'un logiciel de synchronisation de fichiers tant en local qu'en réseau. Il a été développé en Java.",
+  "RepoLink": "https://github.com/Marc-Proux/d-sync"
+}

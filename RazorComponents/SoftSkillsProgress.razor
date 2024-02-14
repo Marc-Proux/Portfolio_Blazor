@@ -1,0 +1,14 @@
+﻿<div class="progress-div">
+    <div><span class="important-text" style="text-align:left">@Title</span><span style="text-align:right">@Value%</span></div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: @Value%" aria-valuenow="@Value" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = String.Empty;
+
+    [Parameter, EditorRequired]
+    public string Value { get; set; } = String.Empty;
+}

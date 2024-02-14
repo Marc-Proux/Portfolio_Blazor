@@ -1,0 +1,10 @@
+﻿{
+  "Id": 3,
+  "Title": "PostBee",
+  "Path": "/../img/projects/postbee.png",
+  "Type": "App",
+  "IsFinished": true,
+  "Description": "PostBee est un projet de fin de 3ème année d'Ingénieur en Informatique et Réseaux. C'est une application android développée en java, accompagnée d'une API développée sous Django servant de blog interne pour notre école, l'ENSISA. Dans le cadre de la formation des ingénieurs de demain, PostBee a été développée de manière Eco-Responsable (consommation d'énergie et code efficient)",
+  "RepoLink": "https://github.com/Marc-Proux/PostBee"
+}
+
