@@ -33,7 +33,7 @@ This is a personal portfolio website built with Blazor Server. It is a single pa
 - [x] Blazor components
 - [x] Formation, work experience and projects are store in different json files
 - [x] Contact form
-- [] Admin page to update or add formation, work experience and projects
+- [ ] Admin page to update or add formation, work experience and projects
 
 
 ## Prerequisites
