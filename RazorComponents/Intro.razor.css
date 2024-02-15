@@ -1,6 +1,6 @@
 ﻿@media screen and (min-width: 1px){
     #intro-image {
-        width: 20rem;
+        width: 15rem;
     }
 }
 
@@ -12,7 +12,7 @@
 
 @media screen and (min-width: 768px){
     #Intro {
-        padding: 5rem;
+        padding: 5rem 3rem;
     }
 }
 
@@ -22,13 +22,12 @@
     }
 
     #intro-image {
-        width: fit-content;
-        height: 35vh;
+        width: 15rem;
     }
 }
 
 @media screen and (min-width: 1200px) {
     #intro-image {
-        height: 45vh;
+        width: 20rem;
     } 
 }

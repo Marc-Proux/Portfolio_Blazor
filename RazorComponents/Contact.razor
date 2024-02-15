@@ -24,7 +24,7 @@
                     <Icon Name="IconName.Envelope" Size="IconSize.x1" Class="colored-text" />
                     <div class="contact-infos-text-container">
                         <div class="important-text fs-5">Email</div>
-                        <div>proux<!--BOT!--ONLY!-->marc<!--BOT!--BATE!-->@@<!--NOT4ROBOT!-->gmail<!--UCANT6ME!-->.<!--H!DE!-->com</div>
+                        <div>contact<!--BOT!--ONLY!-->@@<!--BOT!--BATE!-->marc<!--NOT4ROBOT!-->proux<!--UCANT6ME!-->.<!--H!DE!-->com</div>
                     </div>
                 </li>
 
@@ -112,8 +112,8 @@
 
 
         // Envoyer l'email
-        await EmailService.SendEmailAsync("prouxmarc@gmail.com", "Contact via le Portfolio", messageToMe, "Demeter");
-        await EmailService.SendEmailAsync(ContactForm.Email, "Merci de m'avoir contacté", messageToOther);
+        await EmailService.SendEmailAsync("Contact via le Portfolio", messageToMe);
+        await EmailService.SendEmailAsync("Merci de m'avoir contacté", messageToOther, to: ContactForm.Email);
 
         // Afficher la boîte de dialogue de confirmation et réinitialiser le formulaire
         showDialog = true;

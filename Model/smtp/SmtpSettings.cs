@@ -8,4 +8,7 @@ public class SmtpSettings
     public bool EnableSsl { get; set; }
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
+    public string MyAddr {get; set;} = string.Empty;
+    public string MyName {get; set;} = string.Empty;
+    public string MyMessageDisplayName {get; set;} = string.Empty;
 }
