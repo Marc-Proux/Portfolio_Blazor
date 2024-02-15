@@ -25,8 +25,8 @@ builder.Services.Configure<SmtpSettings>(smtpSettings =>
     smtpSettings.Port = int.Parse(builder.Configuration["SMTP:Port"]);
     smtpSettings.Username = builder.Configuration["SMTP:Username"];
     smtpSettings.Password = builder.Configuration["SMTP:ApiKey"];
-    smtpSettings.EnableSsl = false;
-    smtpSettings.UseDefaultCredentials = false;
+    smtpSettings.EnableSsl = bool.Parse(builder.Configuration["SMTP:EnableSsl"]);
+    smtpSettings.UseDefaultCredentials = bool.Parse(builder.Configuration["SMTP:UseDefaultCredentials"]);
 });
 
 builder.Services.AddTransient<IEmailService, EmailService>();
