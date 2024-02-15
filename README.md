@@ -16,7 +16,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/license-mit.svg)](https://forthebadge.com)
 </div>
 
-This is a personal portfolio website built with Blazor Server. It is a single page application that uses Blazor components for the UI. It's a place where you can showcase your work, skills, and experience. You're formations, work experience and projects are store in different json files so you can easily update them or add some (an admin page is in the work).
+This is a personal portfolio website built with Blazor Server. It is a single page application that uses Blazor components for the UI. It's a place where you can showcase your work, skills, and experience. Your education, work experience and projects are store in different json files so you can easily update them or add some (an admin page is in the work).
 
 ## Built With
 
@@ -44,12 +44,12 @@ This is a personal portfolio website built with Blazor Server. It is a single pa
 
 1. Clone the repository
    ```sh
-   git clone Open the project in Visual Studio and publish it to a folder
+   git clone https://github.com/Marc-Proux/Portfolio_Blazor.git
     ```
 
 2. Open the project in Visual Studio and edit youre portfolio
 
-3. Edit the json files in the Data folder to add your formation, work experience and projects
+3. Edit the json files in the Data folder to add your information (work, education, projects)
 
 4. Publish the project to a folder
 
