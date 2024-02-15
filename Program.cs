@@ -21,15 +21,15 @@ builder.Services.AddOptions<FormationApiJsonDirectAccessSetting>().Configure(opt
 builder.Services.AddScoped<IPortfolioApi, PortfolioApiJsonDirectAccess>();
 builder.Services.Configure<SmtpSettings>(smtpSettings =>
 {
-    smtpSettings.Host = builder.Configuration["SMTP:Host"];
-    smtpSettings.Port = int.Parse(builder.Configuration["SMTP:Port"]);
-    smtpSettings.Username = builder.Configuration["SMTP:Username"];
-    smtpSettings.Password = builder.Configuration["SMTP:ApiKey"];
-    smtpSettings.EnableSsl = bool.Parse(builder.Configuration["SMTP:EnableSsl"]);
-    smtpSettings.UseDefaultCredentials = bool.Parse(builder.Configuration["SMTP:UseDefaultCredentials"]);
-    smtpSettings.MyAddr = builder.Configuration["SMTP:MyAddr"];
-    smtpSettings.MyName = builder.Configuration["SMTP:MyName"];
-    smtpSettings.MyMessageDisplayName = builder.Configuration["SMTP:MyMessageDisplayName"];
+    smtpSettings.Host = builder.Configuration["SMTP_Host"];
+    smtpSettings.Port = int.Parse(builder.Configuration["SMTP_Port"]);
+    smtpSettings.Username = builder.Configuration["SMTP_Username"];
+    smtpSettings.Password = builder.Configuration["SMTP_ApiKey"];
+    smtpSettings.EnableSsl = bool.Parse(builder.Configuration["SMTP_EnableSsl"]);
+    smtpSettings.UseDefaultCredentials = bool.Parse(builder.Configuration["SMTP_UseDefaultCredentials"]);
+    smtpSettings.MyAddr = builder.Configuration["SMTP_MyAddr"];
+    smtpSettings.MyName = builder.Configuration["SMTP_MyName"];
+    smtpSettings.MyMessageDisplayName = builder.Configuration["SMTP_MyMessageDisplayName"];
 });
 
 builder.Services.AddTransient<IEmailService, EmailService>();
