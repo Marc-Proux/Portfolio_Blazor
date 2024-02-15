@@ -78,7 +78,7 @@
 }
 
 .project-description{
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .project-modal-container {

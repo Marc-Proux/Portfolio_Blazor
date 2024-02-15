@@ -13,8 +13,15 @@ public class EmailService : IEmailService
         _smtpSettings = smtpSettings.Value;
     }
 
-    public async Task SendEmailAsync(string to, string subject, string htmlMessage, string from = "Marc Proux")
+    public async Task SendEmailAsync(string subject, string htmlMessage, string? to = null)
     {
+        string displayName = _smtpSettings.MyName;
+        if (string.IsNullOrEmpty(to))
+        {
+            to = _smtpSettings.MyAddr;
+            displayName = _smtpSettings.MyMessageDisplayName;
+        }
+
         using (var smtpClient = new SmtpClient(_smtpSettings.Host, _smtpSettings.Port))
         {
             smtpClient.EnableSsl = _smtpSettings.EnableSsl;
@@ -23,7 +30,7 @@ public class EmailService : IEmailService
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress(_smtpSettings.Username, from),
+                From = new MailAddress(_smtpSettings.Username, displayName),
                 Subject = subject,
                 Body = htmlMessage,
                 IsBodyHtml = true,

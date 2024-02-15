@@ -23,15 +23,12 @@
     }
 }
 
-.sidebar, .navsidebar {
-    height: fit-content;
+.sidebar {
+    margin-bottom: 3rem;
 }
 
 .page {
-    /*    background-color: rgb(24, 25, 26);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
-    background-size: 30px 30px;
-    background-position: -5px -5px*/
+    margin: 0 !important;
     background: rgb(24, 25, 26);
     --gap: 5em;
     --line: 1px;
