@@ -1,6 +1,6 @@
-﻿@using Portfolio.Data.Models.Interface
-@using Portfolio.Data.Models
-@inject IPortfolioApi _api
+﻿@using Portfolio.Model.Data.Interface;
+@using Portfolio.Model.Data;
+@inject IPortfolioApi _api;
 
 <section class="section-padding" id="Formation">
     <div class="box row">
@@ -23,15 +23,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var formationsNonSorted = await _api.GetFormationsAsync();
-        if(formationsNonSorted != null)
-        {
-            formations = formationsNonSorted.OrderByDescending(f => f.Id).ToList();
-        }
-        else
-        {
-            formations = new List<Formation>();
-        }
+        formations = await _api.GetFormationsAsync()?? new List<Formation>();
+        formations = formations.OrderByDescending(item => item.CreationDate).ToList();
         await base.OnInitializedAsync();
     }
 }

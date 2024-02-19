@@ -1,6 +1,9 @@
 ﻿@page "/"
-@using Portfolio.Data.Models
-@using Portfolio.Pages
+@using Portfolio.Model.Data;
+@using Portfolio.Pages;
+@using Portfolio.Model;
+@inject VisitCounterService VisitCounter;
+@inject IHttpContextAccessor HttpContextAccessor;
 
 <PageTitle>Marc Proux</PageTitle>
 
@@ -27,5 +30,26 @@
 </main>
 
 @code{
+    @* protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await VisitCounter.IncrementVisitCountAsync();
+            Console.WriteLine("Visit count incremented");
+        }
+    } *@
 
+    protected override async Task OnInitializedAsync()
+    {
+        var httpContext = HttpContextAccessor.HttpContext;
+        if (httpContext != null && httpContext.Session != null)
+        {
+            // Check if the session key exists
+            if (httpContext.Session.GetString("CounterIncremented") == null)
+            {
+                await VisitCounter.IncrementVisitCountAsync();
+                httpContext.Session.SetString("CounterIncremented", "true");
+            }
+        }
+    }
 }

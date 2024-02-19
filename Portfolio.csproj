@@ -28,7 +28,6 @@
     <Folder Include="RazorComponents\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="Data\" />
-    <Folder Include="Data\Models\" />
     <Folder Include="Data\Models\Interface\" />
     <Folder Include="Data\Experiences\" />
     <Folder Include="Data\Projects\" />

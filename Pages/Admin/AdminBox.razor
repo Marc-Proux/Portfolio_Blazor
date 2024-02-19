@@ -1,0 +1,46 @@
+@if(!String.IsNullOrEmpty(Link))
+{
+    <a href="@Link">
+        <div class="d-flex box-container justify-content-around box">
+            <div class="box-description d-flex flex-column align-items-center col-6">
+                <p class="box-number">@Number</p>
+                <p class="box-title important-text">@Title</p>
+            </div>
+            <Icon Name="@IconName" Size="IconSize.x1" Class="colored-text" />
+        </div>
+    </a>
+}
+else
+{
+    <div class="d-flex box-container justify-content-around box">
+        <div class="box-description d-flex flex-column align-items-center col-6">
+            <p class="box-number">@Number</p>
+            <p class="box-title important-text">@Title</p>
+        </div>
+        <Icon Name="@IconName" Size="IconSize.x1" Class="colored-text" />
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public string Number { get; set; } = String.Empty;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = String.Empty;
+
+    [Parameter, EditorRequired]
+    public string Ico { get; set; } = String.Empty;
+
+    [Parameter]
+    public string Link { get; set; } = String.Empty;
+
+    private IconName IconName;
+
+    protected override void OnParametersSet()
+    {
+        if(Enum.TryParse(Ico, out IconName result))
+        {
+            IconName = result;
+        }
+    }
+}

@@ -1,4 +1,5 @@
-﻿@using Portfolio.Data.Models
+﻿@using Portfolio.Model.Data;
+@using Markdig;
 
 <div class="project-modal-container" @onclick="@Close" style="@ContainerStyle">
     <div class="box row project-modal" @onclick:stopPropagation>
@@ -9,7 +10,7 @@
         <div class="mt-4 mt-lg-0 col-12 col-lg-6 d-flex flex-column project-description-container" style="max-height:100%">
             <span class="important-text project-title fs-2">@Element.Title</span>
             <span class="colored-text project-type">@Element.Type</span>
-            <span class="mt-3 project-description">@Element.Description</span>
+            <span class="mt-3 project-description">@((MarkupString)Markdig.Markdown.ToHtml(Element.Description, pipeline))</span>
 
             @if (!Element.IsFinished)
             {
@@ -64,6 +65,8 @@
     [Parameter]
     [EditorRequired]
     public EventCallback<MouseEventArgs> Close { get; set; }
+
+    MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
 
     public string ContainerStyle => Show ?
         "opacity: 1; visibility: visible; transition: opacity 0.2s, visibility 0s 0s;" :

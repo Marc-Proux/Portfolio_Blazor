@@ -1,0 +1,164 @@
+@page "/admin/education/edit"
+@page "/admin/education/edit/{Id}"
+@using Portfolio.Model.Data;
+@using Portfolio.Model;
+@using Portfolio.Model.Data.Interface;
+@inject NavigationManager _manager;
+@inject IPortfolioApi _api;
+@using Markdig;
+
+<main class="page">
+    <div id="Admin-Panner-Header" class="important-text d-flex justify-content-between align-items-center">
+        <div id="Admin-Panel-Title">
+            Portfolio Admin
+        </div>
+        <div>
+            <a href="" class="Admin-Action-Button">
+                Voir le site
+            </a>
+            &nbsp;/&nbsp;
+            <a class="Admin-Action-Button">
+                Déconnexion
+            </a>
+        </div>
+    </div>
+    <div id="Admin-Panel-Page" class="row">
+        <div class="col-2 box" id="Admin-Panel-NavBar">
+            <div>
+                <a href="admin" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Speedometer2" Size="IconSize.x5" Class="important-text"/> &nbsp; Dashboard
+                </a>
+            </div>
+            <div>
+                <a href="admin/projects" class="Admin-Nav-Link">
+                    <Icon Name="IconName.JournalCode" Size="IconSize.x5" Class="important-text"/> &nbsp; Projets
+                </a>
+            </div>
+            <div>
+                <a href="admin/experience" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Briefcase" Size="IconSize.x5" Class="important-text"/> &nbsp; Expériences
+                </a>
+            </div>
+            <div>
+                <a href="admin/education" class="Admin-Nav-Link Admin-Nav-Active">
+                    <Icon Name="IconName.Mortarboard" Size="IconSize.x5" Class="important-text"/> &nbsp; Formations
+                </a>
+            </div>
+        </div>
+        <div class="col-5 box" id="Admin-Panel-Content">
+            <EditForm Model="education" OnValidSubmit="SavePost">
+                <DataAnnotationsValidator />
+                <CustomCssClassProvider ProviderType="BootstrapFieldCssClassProvider" />
+                <PortfolioNavigationLock @ref="NavigationLock"/>
+
+                <InputTextAreaOnInput @bind-Value="education.Title" @onkeyup="UpdateTitle" placeholder="Titre" type="text" class="admin-form-input"/>
+                <ValidationMessage For="()=>education.Title" />
+
+                <InputTextAreaOnInput @bind-Value="education.Date" @onkeyup="UpdateDate" placeholder="Date" type="text" class="admin-form-input"/>
+                <ValidationMessage For="()=>education.Date" />
+                
+                <InputTextAreaOnInput @bind-Value="education.Location"@onkeyup="UpdateLocation" placeholder="Lieu" type="text" class="admin-form-input"/>
+                <ValidationMessage For="()=>education.Location" />
+
+                <InputTextAreaOnInput @bind-Value="education.Text" @onkeyup="UpdateDescription" placeholder="Description" type="text" class="admin-form-text-area"/>
+                <ValidationMessage For="()=>education.Text" />
+
+                <button class="button-theme fs-6 important-text" style="width:7rem; height:2rem;" type="submit">
+                    Enregistrer
+                </button>
+            </EditForm>
+        </div>
+
+        <div class="col-4 box Timeline-Demo">
+            <div class="d-flex flex-column flex-sm-row timeline-container">
+                <div class="d-flex flex-sm-column timeline-informations justify-content-between justify-content-sm-start">
+                    <span class="important-text">@location</span>
+                    <span class="colored-text">@date</span>
+                </div>
+
+                <div class="d-flex flex-column timeline-description">
+                    <span class="important-text timeline-description-title">@title</span>
+                    <div class="timeline-description-text">@((MarkupString)text)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+@code{
+    [Parameter]
+    public string? Id { get; set; } = null;
+
+    private Formation education = new Formation();
+    MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
+    PortfolioNavigationLock? NavigationLock { get; set; }
+
+    private string text = "Description";
+    private string title = "Titre";
+    private string date = "Date";
+    private string location = "Lieu";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            education = await _api.GetFormationAsync(Id);
+            if(education == null){
+                _manager.NavigateTo("admin/education");
+                education = new Formation();
+            }
+            UpdateDescription();
+            UpdateTitle();
+            UpdateDate();
+            UpdateLocation();
+        }
+    }
+
+    protected void UpdateDescription()
+    {
+        if(education.Text != null && education.Text != ""){
+            text = Markdig.Markdown.ToHtml(education.Text, pipeline);
+        }
+        else{
+            text = "Description";
+        }
+    }
+
+    protected void UpdateTitle()
+    {
+        if(education.Title != null && education.Title != ""){
+            title = education.Title;
+        }
+        else{
+            text = "Titre";
+        }
+    }
+
+    protected void UpdateDate()
+    {
+        if(education.Date != null && education.Date != ""){
+            date = education.Date;
+        }
+        else{
+            date = "Date";
+        }
+    }
+
+    protected void UpdateLocation()
+    {
+        if(education.Location != null && education.Location != ""){
+            location = education.Location;
+        }
+        else{
+            location = "Entreprise";
+        }
+    }
+
+    private async Task SavePost()
+    {
+        NavigationLock?.CurrentEditContext.MarkAsUnmodified();
+        await _api.SaveFormationAsync(education);
+        _manager.NavigateTo("admin/education");
+    }
+}

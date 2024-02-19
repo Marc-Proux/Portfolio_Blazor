@@ -1,6 +1,6 @@
-﻿@using Portfolio.Data.Models.Interface
-@using Portfolio.Data.Models
-@inject IPortfolioApi _api
+﻿@using Portfolio.Model.Data.Interface;
+@using Portfolio.Model.Data;
+@inject IPortfolioApi _api;
 
 <section class="section-padding" id="Works">
     <div class="box row">
@@ -22,15 +22,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var experiencesNonSorted = await _api.GetExperiencesAsync();
-        if(experiencesNonSorted != null)
-        {
-            experiences = experiencesNonSorted.OrderByDescending(e => e.Id).ToList();
-        }
-        else
-        {
-            experiences = new List<Experience>();
-        }
+        experiences = await _api.GetExperiencesAsync()?? new List<Experience>();
+        experiences = experiences.OrderByDescending(item => item.CreationDate).ToList();
         await base.OnInitializedAsync();
     }
 }

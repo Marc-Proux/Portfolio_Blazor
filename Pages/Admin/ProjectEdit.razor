@@ -1,0 +1,284 @@
+@page "/admin/projects/edit"
+@page "/admin/projects/edit/{Id}"
+@using Portfolio.Model.Data;
+@using Portfolio.Model;
+@using Portfolio.Model.Data.Interface;
+@inject NavigationManager _manager;
+@inject IPortfolioApi _api;
+@using Markdig;
+@inject IWebHostEnvironment Environment
+
+<main class="page">
+    <div id="Admin-Panner-Header" class="important-text d-flex justify-content-between align-items-center">
+        <div id="Admin-Panel-Title">
+            Portfolio Admin
+        </div>
+        <div>
+            <a href="" class="Admin-Action-Button">
+                Voir le site
+            </a>
+            &nbsp;/&nbsp;
+            <a class="Admin-Action-Button">
+                Déconnexion
+            </a>
+        </div>
+    </div>
+    <div id="Admin-Panel-Page" class="row">
+        <div class="col-2 box" id="Admin-Panel-NavBar">
+            <div>
+                <a href="admin" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Speedometer2" Size="IconSize.x5" Class="important-text"/> &nbsp; Dashboard
+                </a>
+            </div>
+            <div>
+                <a href="admin/projects" class="Admin-Nav-Link Admin-Nav-Active">
+                    <Icon Name="IconName.JournalCode" Size="IconSize.x5" Class="important-text"/> &nbsp; Projets
+                </a>
+            </div>
+            <div>
+                <a href="admin/experience" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Briefcase" Size="IconSize.x5" Class="important-text"/> &nbsp; Expériences
+                </a>
+            </div>
+            <div>
+                <a href="admin/education" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Mortarboard" Size="IconSize.x5" Class="important-text"/> &nbsp; Formations
+                </a>
+            </div>
+        </div>
+        <div class="col-5 box" id="Admin-Panel-Content">
+            <EditForm Model="project" OnValidSubmit="SavePost">
+                <DataAnnotationsValidator />
+                <CustomCssClassProvider ProviderType="BootstrapFieldCssClassProvider" />
+                <PortfolioNavigationLock @ref="NavigationLock"/>
+
+                <InputTextAreaOnInput @bind-Value="project.Title" @onkeyup="UpdateTitle" placeholder="Titre" type="text" class="admin-form-input"/>
+                <ValidationMessage For="()=>project.Title" />
+
+                <InputTextAreaOnInput @bind-Value="project.Type" @onkeyup="UpdateType" placeholder="Type" type="text" class="admin-form-input"/>
+                <ValidationMessage For="()=>project.Type" />
+                
+                <InputFile OnChange="@OnUpload" id="Input-Image" class="d-none"/>
+                <label for="Input-Image" class="button-theme important-text" id="Upload-Image-Button">
+                    <Icon Name="IconName.Upload" Size="IconSize.x5" Class="important-text"/> &nbsp;
+                    Ajouter une image
+                </label>
+                @if (ImageErrorMessage != null)
+                {
+                    <div class="validation-message">
+                        @ImageErrorMessage
+                    </div>
+                }
+
+                <InputTextAreaOnInput @bind-Value="project.RepoLink" @onkeyup="UpdateLink" placeholder="Depot (optionel)" type="text" class="admin-form-input"/>
+                <ValidationMessage For="()=>project.Path" />
+
+                <InputTextAreaOnInput @bind-Value="project.Description" @onkeyup="UpdateHTML" placeholder="Description" type="text" class="admin-form-text-area"/>
+                <ValidationMessage For="()=>project.Description" />
+
+                <label class="container">Projet terminé
+                    <InputCheckbox @bind-Value="project.IsFinished"/>
+                    <span class="checkmark"></span>
+                </label>
+
+                <button class="button-theme fs-6 important-text" style="padding: 0.5rem 1rem;" type="submit">
+                    Enregistrer
+                </button>
+            </EditForm>
+        </div>
+
+        <div class="col-4 d-flex justify-content-center mb-4">
+            <div class="project-container d-flex flex-column">
+
+                <div class="project-img-container">
+                    <img src="@path" class="project-image" />
+                </div>
+
+                <span class="colored-text project-type">@type</span>
+                <span class="important-text project-title">@title</span>
+            </div>
+        </div>
+
+        <div class="col-9 offset-3 box row project-modal">
+            <div class="col-6 project-modal-img-container d-flex align-items-center">
+                <img src="@path" class="project-modal-image" />
+            </div>
+
+            <div class="col-6 d-flex flex-column project-description-container" style="max-height:100%">
+                <span class="important-text project-modal-title fs-2">@title</span>
+                <span class="colored-text project-modal-type">@type</span>
+                <span class="mt-3 project-description">@((MarkupString)description)</span>
+
+                @if (!project.IsFinished)
+                {
+                    <div class="in-progress-tag">
+                        Projet en développement
+                    </div>
+                }
+
+                @if (repoLink != null)
+                {
+                    <form action="@repoLink" method="get" target="_blank" class="row project-repo-link">
+                        <button class="button-theme important-text col-4 d-flex justify-content-center align-items-center project-button" type="submit">
+
+                            Code&nbsp;
+
+                            @if (repoLink.Contains("github"))
+                            {
+                                <Icon Name="IconName.Github" Size="IconSize.x5" Color="IconColor.White" />
+                            }
+                            else if (repoLink.Contains("arcadia"))
+                            {
+                                <Icon Name="IconName.Gitlab" Size="IconSize.x5" Color="IconColor.White" />
+                            }
+                            else
+                            {
+                                <Icon Name="IconName.Git" Size="IconSize.x5" Color="IconColor.White" />
+                            }
+
+                        </button>
+                    </form>
+                }
+            </div>
+
+            <div class="close-button-container">
+                <button class="button">
+                    <span class="X"></span>
+                    <span class="Y"></span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+@code{
+    [Parameter]
+    public string? Id { get; set; } = null;
+    private IBrowserFile uploadedFile;
+
+    private Project project = new Project();
+    MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().Build();
+    PortfolioNavigationLock? NavigationLock { get; set; }
+
+    private string description = "Description";
+    private string title = "Titre";
+    private string type = "Type";
+    private string path = @"/img/admin/no-image.png";
+    private string src = "";
+    private string repoLink = null;
+    private string ImageErrorMessage { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != null)
+        {
+            project = await _api.GetProjectAsync(Id);
+            if (project == null)
+            {
+                project = new Project();
+                _manager.NavigateTo("admin/projects");
+            }
+            UpdateHTML();
+            UpdateTitle();
+            UpdateType();
+            UpdatePath();
+            UpdateLink();
+        }
+    }
+
+    async Task OnUpload(InputFileChangeEventArgs e)
+    {
+        path = @"/img/admin/loading.gif";
+        ImageErrorMessage = null;
+        uploadedFile = e.File;
+        var maxAllowedSize = 1024 * 1024 * 15; // For example, 15 MB
+
+        if(!FileUtility.IsImageExtensionValid(e.File.Name)){
+            ImageErrorMessage = "Invalid file type. Please upload an image file.";
+            path = @"/img/admin/no-image.png";
+            return; // Exit early as the file is not an image
+        }
+
+        if (e.File.Size > maxAllowedSize)
+        {
+            ImageErrorMessage = $"File size exceeds the maximum allowed size of {maxAllowedSize / (1024 * 1024)}MB.";
+            path = @"/img/admin/no-image.png";
+            return; // Exit early as the file is too large
+        }
+
+        using var imageFile = e.File.OpenReadStream(maxAllowedSize);
+        using var ms = new MemoryStream();
+        await imageFile.CopyToAsync(ms);
+        ms.Position = 0; // Reset the position to the start of the stream
+        path = $"data:{e.File.ContentType};base64,{Convert.ToBase64String(ms.ToArray())}";
+    }
+
+    protected void UpdateHTML()
+    {
+        if(project.Description != null && project.Description != ""){
+            description = Markdig.Markdown.ToHtml(project.Description, pipeline);
+        }
+        else{
+            description = "Description";
+        }
+    }
+
+    protected void UpdateTitle()
+    {
+        if(project.Title != null && project.Title != "")
+        {
+            title = project.Title;
+        }
+        else{
+            title = "Titre";
+        }
+    }
+
+    protected void UpdateType()
+    {
+        if(project.Type != null && project.Type != "")
+        {
+            type = project.Type;
+        }
+        else{
+            type = "Type";
+        }
+    }
+
+    protected void UpdatePath()
+    {
+        if(FileUtility.IsImageExtensionValid(project.Path) && FileUtility.IsImageExists("wwwroot/"+project.Path))
+        {
+            path = @"/"+project.Path;
+        }
+        else{
+            path = @"/img/admin/no-image.png";
+        }
+    }
+
+    protected void UpdateLink()
+    {
+        if(project.RepoLink != null && project.RepoLink != "")
+        {
+            repoLink = project.RepoLink;
+        }
+        else{
+            repoLink = null;
+        }
+    }
+
+    private async Task SavePost()
+    {
+        string trueName = uploadedFile.Name;
+        if (uploadedFile != null)
+        {
+            @* await FileUtility.SaveImageAsync(uploadedFile); *@
+            trueName = await FileUtility.SaveImageAsync(uploadedFile);
+        }
+        NavigationLock?.CurrentEditContext.MarkAsUnmodified();
+        project.Path = "img/projects/"+trueName;
+        await _api.SaveProjectAsync(project);
+        _manager.NavigateTo("admin/projects");
+    }
+}

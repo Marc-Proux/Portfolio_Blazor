@@ -1,0 +1,50 @@
+@using Enum
+@using Portfolio.Model.Data
+
+<div class="d-flex">
+    <Icon Name="@GetIconName(Event.Action)" Size="IconSize.x5" Class="@GetIconColor(Event.Action)" />
+    <div class="ObjectHistory-Description">
+        <div class="important-text">
+            @if (Event.Action != ObjectHistoryEnum.Delete)
+            {
+                <a href="admin/@Event.ElementType/edit/@Event.ElementId" class="Admin-Action-Button">
+                    @Event.ElementName
+                </a>
+            }
+            else
+            {
+                @Event.ElementName
+            }
+        </div>
+        <div>@GetElementTypeDisplayName(Event.ElementType)</div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public DataHistory Event { get; set; }
+
+    private IconName GetIconName(ObjectHistoryEnum action) => action switch
+    {
+        ObjectHistoryEnum.Add => IconName.PlusLg,
+        ObjectHistoryEnum.Edit => IconName.Pencil,
+        ObjectHistoryEnum.Delete => IconName.XLg,
+        _ => throw new ArgumentOutOfRangeException(nameof(action), action, null)
+    };
+
+    private string GetIconColor(ObjectHistoryEnum action) => action switch
+    {
+        ObjectHistoryEnum.Add => "green",
+        ObjectHistoryEnum.Edit => "orange",
+        ObjectHistoryEnum.Delete => "red",
+        _ => throw new ArgumentOutOfRangeException(nameof(action), action, null)
+    };
+
+    private string GetElementTypeDisplayName(PortfolioElementEnum elementType) => elementType switch
+    {
+        PortfolioElementEnum.projects => "Projet",
+        PortfolioElementEnum.experience => "Experience",
+        PortfolioElementEnum.education => "Formation",
+        _ => throw new ArgumentOutOfRangeException(nameof(elementType), elementType, null)
+    };
+}

@@ -54,3 +54,8 @@
     flex-grow: 0;
     flex-shrink: 0;
 }
+
+.timeline-description-text{
+    overflow-x: hidden;
+    overflow-y: scroll;
+}

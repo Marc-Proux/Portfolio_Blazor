@@ -1,0 +1,35 @@
+a{
+    color: #999999;
+    text-decoration: none;
+}
+
+a:hover .box-container{
+    background-color: rgb(64, 66, 67);
+}
+
+.box-container{
+    border: 1px solid #e0e0e0;
+    width: 15rem;
+    padding: 1rem;
+    transition: background-color ease 0.4s;
+    -webkit-transition: background-color ease 0.4s;
+    -moz-transition: background-color ease 0.4s;
+    -o-transition: background-color ease 0.4s;
+    -ms-transition: background-color ease 0.4s;
+}
+
+.box-title{
+    font-size: 1.5rem;
+}
+
+.box-number{
+    font-size: 1.2rem;
+}
+
+.box-title, .box-number{
+    margin: 0;
+}
+
+.box-description{
+    width: fit-content;
+}

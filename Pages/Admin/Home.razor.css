@@ -1,0 +1,12 @@
+#Admin-Box-Container{
+    margin-bottom: 3rem;
+}
+
+#Admin-Object-Summary, #Admin-Object-History{
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+}
+
+#Admin-Object-Summary{
+    height: fit-content;
+}

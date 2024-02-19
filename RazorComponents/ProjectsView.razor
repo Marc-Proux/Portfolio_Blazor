@@ -1,6 +1,6 @@
-﻿@using Portfolio.Data.Models.Interface
-@using Portfolio.Data.Models
-@inject IPortfolioApi _api
+﻿@using Portfolio.Model.Data.Interface;
+@using Portfolio.Model.Data;
+@inject IPortfolioApi _api;
 
 <section class="section-padding" id="Portfolio">
     <div class="box">
@@ -26,6 +26,7 @@
         {
             projects = new List<Project>();
         }
+        projects = projects.OrderBy(item => item.CreationDate).ToList();
         await base.OnInitializedAsync();
     }
 }

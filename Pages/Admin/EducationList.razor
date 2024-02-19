@@ -1,0 +1,95 @@
+@page "/admin/education"
+@using Portfolio.Model.Data;
+@using Portfolio.Model.Data.Interface;
+@inject IPortfolioApi _api
+@using Portfolio.Pages
+@using Enum
+
+<main class="page">
+    <div id="Admin-Panner-Header" class="important-text d-flex justify-content-between align-items-center">
+        <div id="Admin-Panel-Title">
+            Portfolio Admin
+        </div>
+        <div>
+            <a href="" class="Admin-Action-Button">
+                Voir le site
+            </a>
+            &nbsp;/&nbsp;
+            <a class="Admin-Action-Button">
+                Déconnexion
+            </a>
+        </div>
+    </div>
+    <div id="Admin-Panel-Page" class="row">
+        <div class="col-2 box" id="Admin-Panel-NavBar">
+            <div>
+                <a href="admin" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Speedometer2" Size="IconSize.x5" Class="important-text"/> &nbsp; Dashboard
+                </a>
+            </div>
+            <div>
+                <a href="admin/projects" class="Admin-Nav-Link">
+                    <Icon Name="IconName.JournalCode" Size="IconSize.x5" Class="important-text"/> &nbsp; Projets
+                </a>
+            </div>
+            <div>
+                <a href="admin/experience" class="Admin-Nav-Link">
+                    <Icon Name="IconName.Briefcase" Size="IconSize.x5" Class="important-text"/> &nbsp; Expériences
+                </a>
+            </div>
+            <div>
+                <a href="admin/education" class="Admin-Nav-Link Admin-Nav-Active">
+                    <Icon Name="IconName.Mortarboard" Size="IconSize.x5" Class="important-text"/> &nbsp; Formations
+                </a>
+            </div>
+        </div>
+        <div class="col-9 box" id="Admin-Panel-Content">
+            <div class="colored-text" id="Admin-Panel-Content-Title">
+                Liste des formations
+                <a href="admin/education/edit" class="Admin-Add-Button">
+                    + Ajouter une formation
+                </a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Virtualize Items="educations" Context="education">
+                        <tr>
+                            <td>@education.Title</td>
+                            <td>
+                                <a href="admin/education/edit/@education.Id" class="Admin-Action-Button"><Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange"/> Modifier &nbsp;</a>
+                                <a @onclick="@(() => Delete(education.Id))" class="Admin-Action-Button"><Icon Name="IconName.XLg" Size="IconSize.x5" Class="red"/> Supprimer</a>
+                            </td>
+                        </tr>
+                    </Virtualize>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+@code{
+    protected List<Formation> educations = new List<Formation>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if((educations = await _api.GetFormationsAsync()) == null)
+        {
+            educations = new List<Formation>();
+        }
+        educations = educations.OrderByDescending(item => item.CreationDate).ToList();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task Delete(string id)
+    {
+        await _api.DeleteFormationAsync(id);
+        educations = await _api.GetFormationsAsync();
+        StateHasChanged();
+    }
+}

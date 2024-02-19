@@ -1,0 +1,149 @@
+#Admin-Panel-Content{
+    margin: 0 2rem 0 20%;
+    padding: 1rem 2rem;
+}
+
+/* Project Component rendering */
+.project-img-container{
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+}
+
+.project-container {
+    border-radius: 15px;
+    background-color: rgb(45, 46, 47);
+    padding: 1rem;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+    .project-container:hover {
+        cursor: pointer;
+    }
+
+    .project-container:hover .project-image {
+        transform: scale(1.1);
+    }
+
+.project-type {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin: 0.5rem 0 0.5rem 0.25rem;
+}
+
+.project-title{
+    font-size: 1.5rem;
+    margin-left: 0.25rem;
+}
+
+
+/* Project Modal rendering */
+.project-model-img-container {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.project-modal-image {
+    border-radius: 15px;
+    height: auto;
+    width: 90%;
+}
+
+.project-modal-type {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.project-modal-title {
+    font-size: 2rem;
+}
+
+.project-description{
+    font-size: 1.1rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 30vh;
+}
+
+.project-repo-link {
+    padding: 1rem;
+    width: 100%;
+    height: 4.5rem;
+}
+
+.close-button-container {
+    position: absolute;
+    top: 0.5em;
+    left: calc(100% - 4.5em);
+    padding: 0;
+    width: auto;
+}
+
+.button {
+    position: relative;
+    width: 3em;
+    aspect-ratio: 1/1;
+    border: none;
+    background: rgba(45, 46, 47);
+    border-radius: 90000px;
+}
+
+.X {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.5em;
+    height: 1.125px;
+    background-color: white;
+    transform: translateX(-50%) rotate(45deg);
+    transition: background 0.5s;
+}
+
+.Y {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.5em;
+    height: 1.125px;
+    background-color: white;
+    transform: translateX(-50%) rotate(-45deg);
+    transition: background 0.5s;
+}
+
+.button:hover .X, .button:hover .Y {
+    background-color: rgb(211, 21, 21);
+}
+
+.button:active .X, .button:active .Y {
+    background-color: rgb(130, 0, 0);
+}
+
+.in-progress-tag {
+    color: #FF8C00;
+    font-size: 0.85rem;
+    margin-top: 0.7rem;
+}
+
+.project-modal {
+    height: fit-content;
+    position: relative;
+    padding: 2rem;
+    margin: 3rem 1rem 0 20%;
+}
+
+.project-description-container{
+    margin: auto 0 !important;
+}
+
+#Upload-Image-Button{
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+}

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Portfolio.Data;
-using Portfolio.Data.Models.Interface;
+using Portfolio.Model;
+using Portfolio.Model.Data;
+using Portfolio.Model.Data.Interface;
 using Portfolio.Model.Smtp;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +12,23 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddBlazorBootstrap();
 
+// Add session state services
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache(); // Necessary for session state
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddOptions<FormationApiJsonDirectAccessSetting>().Configure(options =>
 {
-    options.DataPath = @"Data/";
+    options.DataPath = @"wwwroot/Data/";
     options.FormationsFolder = "Formations";
     options.ExperiencesFolder = "Experiences";
     options.ProjectsFolder = "Projects";
+    options.HistoryFolder = "History";
 });
 builder.Services.AddScoped<IPortfolioApi, PortfolioApiJsonDirectAccess>();
 builder.Services.Configure<SmtpSettings>(smtpSettings =>
@@ -33,6 +45,8 @@ builder.Services.Configure<SmtpSettings>(smtpSettings =>
 });
 
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddSingleton<VisitCounterService>(new VisitCounterService("wwwroot/Data/visitCount.txt"));
+
 
 var app = builder.Build();
 
@@ -49,6 +63,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

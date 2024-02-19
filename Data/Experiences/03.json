@@ -1,7 +1,0 @@
-﻿{
-  "Id": 3,
-  "Title": "Stage développement d'application en C#",
-  "Location": "Euro-Information",
-  "Date": "Été 2023",
-  "Text": "Au sein de l'équipe Monétique de l'atelier Ingénierie Cartes & Chèques, il m'a été confié la tâche de développer un logiciel en C#. Ce logiciel interne vise à fournir diverses applications destinées à simplifier les opérations quotidiennes de l'équipe. Parmi ses fonctionnalités, on compte :\n * Chiffrement/Déchiffrement\n * Transchiffrement\n * Conversion Deci/Hexa/Binaire\n * Décryptage de codes PIN\n * Interprétation d'EMV Tag\n *  Décodage de KeyBlock Thalès ou TR-31."
-}

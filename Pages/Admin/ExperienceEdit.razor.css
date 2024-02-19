@@ -1,0 +1,54 @@
+#Admin-Panel-Content{
+    margin: 0 2rem 0 20%;
+    padding: 1rem 2rem;
+}
+
+.Timeline-Demo{
+    padding: 1rem 2rem;
+    position: relative;
+    height: fit-content;
+}
+
+.Timeline-Demo::before {
+    content: '';
+    border-right: 1px solid #2d2e2f;
+    height: calc(100% - 3rem);
+    top: 1.5rem;
+    left: 14.24rem;
+    position: absolute;
+}
+
+.timeline-informations {
+    padding-right: 1rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 13rem;
+    height: 10rem;
+}
+
+.timeline-description::before {
+    content: '';
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0 0 .5rem rgba(255, 255, 255, 0.15);
+    background-color: rgb(84, 185, 148);
+    border-radius: 9999px;
+    width: 0.5rem;
+    aspect-ratio: 1/1;
+    position: absolute;
+    top: 0.5rem;
+    left: -0.98rem;
+}
+
+.timeline-description {
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+.timeline-container {
+    margin-bottom: 1rem!important;
+}
+
+.timeline-description-text{
+    max-height: 10rem;
+    overflow-x: hidden;
+    overflow-y: scoll;
+}

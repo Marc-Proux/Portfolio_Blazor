@@ -579,5 +579,6 @@ FodyWeavers.xsd
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
+visitCount.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudio,visualstudiocode,aspnetcore,dotnetcore
