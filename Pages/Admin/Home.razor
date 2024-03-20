@@ -6,107 +6,125 @@
 @inject VisitCounterService VisitCounter;
 @inject IPortfolioApi _api;
 @using Enum
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Identity
+@using Portfolio.Areas.Identity.Data;
+@inject SignInManager<PortfolioUser> SignInManager
 
-<main class="page">
-    <div id="Admin-Panner-Header" class="important-text d-flex justify-content-between align-items-center">
-        <div id="Admin-Panel-Title">
-            Portfolio Admin
-        </div>
-        <div>
-            <a href="" class="Admin-Action-Button">
-                Voir le site
-            </a>
-            &nbsp;/&nbsp;
-            <a class="Admin-Action-Button">
-                Déconnexion
-            </a>
-        </div>
-    </div>
-    <div id="Admin-Panel-Page" class="row">
-        <div class="col-2 box" id="Admin-Panel-NavBar">
-            <div>
-                <a href="admin" class="Admin-Nav-Link Admin-Nav-Active">
-                    <Icon Name="IconName.Speedometer2" Size="IconSize.x5" Class="important-text"/> &nbsp; Dashboard
-                </a>
-            </div>
-            <div>
-                <a href="admin/projects" class="Admin-Nav-Link">
-                    <Icon Name="IconName.JournalCode" Size="IconSize.x5" Class="important-text"/> &nbsp; Projets
-                </a>
-            </div>
-            <div>
-                <a href="admin/experience" class="Admin-Nav-Link">
-                    <Icon Name="IconName.Briefcase" Size="IconSize.x5" Class="important-text"/> &nbsp; Expériences
-                </a>
-            </div>
-            <div>
-                <a href="admin/education" class="Admin-Nav-Link">
-                    <Icon Name="IconName.Mortarboard" Size="IconSize.x5" Class="important-text"/> &nbsp; Formations
-                </a>
-            </div>
-        </div>
-        <div class="col-9" id="Admin-Panel-Content">
-            <div id="Admin-Box-Container" class="d-flex justify-content-between">
-                <AdminBox Number="@VisitCount" Title="Visites" Ico="Person"/>
-                <AdminBox Number="@ProjectCount" Title="Projects" Ico="JournalCode" Link="admin/projects" />
-                <AdminBox Number="@ExperienceCount" Title="Experiences" Ico="Briefcase" Link="admin/experience"/>
-                <AdminBox Number="@EducationCount" Title="Formations" Ico="Mortarboard" Link="admin/education"/>
-            </div>
+<CascadingAuthenticationState>
 
-            <div class="row" style="margin: 0;">
-                <div class="col-5 box important-text" id="Admin-Object-Summary">
-                    <div class="d-flex justify-content-between">
-                        <p>Projets</p>
+    <AuthorizeView>
+        <Authorized>
+            <main class="page">
+                <div id="Admin-Panner-Header" class="important-text d-flex justify-content-between align-items-center">
+                    <div id="Admin-Panel-Title">
+                        Portfolio Admin
+                    </div>
+                    <div>
+                        <a href="" class="Admin-Action-Button">
+                            Voir le site
+                        </a>
+                        &nbsp;/&nbsp;
+                        @* <a class="Admin-Action-Button">
+                            Déconnexion
+                        </a> *@
+                        @*Log out button that redirect to /logout*@
+                        <a href="" class="Admin-Action-Button" @onclick="Logout">
+                            Déconnexion
+                        </a>
+                    </div>
+                </div>
+                <div id="Admin-Panel-Page" class="row">
+                    <div class="col-2 box" id="Admin-Panel-NavBar">
                         <div>
-                            <a href="admin/projects/edit" class="Admin-Action-Button">
-                                <Icon Name="IconName.PlusLg" Size="IconSize.x5" Class="green"/> Ajouter &nbsp;
+                            <a href="admin" class="Admin-Nav-Link Admin-Nav-Active">
+                                <Icon Name="IconName.Speedometer2" Size="IconSize.x5" Class="important-text" /> &nbsp; Dashboard
                             </a>
-                            <a href="admin/projects" class="Admin-Action-Button">
-                                <Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange"/> Modifier
+                        </div>
+                        <div>
+                            <a href="admin/projects" class="Admin-Nav-Link">
+                                <Icon Name="IconName.JournalCode" Size="IconSize.x5" Class="important-text" /> &nbsp; Projets
+                            </a>
+                        </div>
+                        <div>
+                            <a href="admin/experience" class="Admin-Nav-Link">
+                                <Icon Name="IconName.Briefcase" Size="IconSize.x5" Class="important-text" /> &nbsp; Expériences
+                            </a>
+                        </div>
+                        <div>
+                            <a href="admin/education" class="Admin-Nav-Link">
+                                <Icon Name="IconName.Mortarboard" Size="IconSize.x5" Class="important-text" /> &nbsp; Formations
                             </a>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <p>Expérience</p>
-                        <div>
-                            <a href="admin/experience/edit" class="Admin-Action-Button">
-                                <Icon Name="IconName.PlusLg" Size="IconSize.x5" Class="green"/> Ajouter &nbsp;
-                            </a>
-                            <a href="admin/experience" class="Admin-Action-Button">
-                                <Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange"/> Modifier
-                            </a>
+                    <div class="col-9" id="Admin-Panel-Content">
+                        <div id="Admin-Box-Container" class="d-flex justify-content-between">
+                            <AdminBox Number="@VisitCount" Title="Visites" Ico="Person" />
+                            <AdminBox Number="@ProjectCount" Title="Projects" Ico="JournalCode" Link="admin/projects" />
+                            <AdminBox Number="@ExperienceCount" Title="Experiences" Ico="Briefcase" Link="admin/experience" />
+                            <AdminBox Number="@EducationCount" Title="Formations" Ico="Mortarboard" Link="admin/education" />
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p>Formation</p>
-                        <div>
-                            <a href="admin/education/edit" class="Admin-Action-Button">
-                                <Icon Name="IconName.PlusLg" Size="IconSize.x5" Class="green"/> Ajouter &nbsp;
-                            </a>
-                            <a href="admin/education" class="Admin-Action-Button">
-                                <Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange"/> Modifier
-                            </a>
+
+                        <div class="row" style="margin: 0;">
+                            <div class="col-5 box important-text" id="Admin-Object-Summary">
+                                <div class="d-flex justify-content-between">
+                                    <p>Projets</p>
+                                    <div>
+                                        <a href="admin/projects/edit" class="Admin-Action-Button">
+                                            <Icon Name="IconName.PlusLg" Size="IconSize.x5" Class="green" /> Ajouter &nbsp;
+                                        </a>
+                                        <a href="admin/projects" class="Admin-Action-Button">
+                                            <Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange" /> Modifier
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Expérience</p>
+                                    <div>
+                                        <a href="admin/experience/edit" class="Admin-Action-Button">
+                                            <Icon Name="IconName.PlusLg" Size="IconSize.x5" Class="green" /> Ajouter &nbsp;
+                                        </a>
+                                        <a href="admin/experience" class="Admin-Action-Button">
+                                            <Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange" /> Modifier
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Formation</p>
+                                    <div>
+                                        <a href="admin/education/edit" class="Admin-Action-Button">
+                                            <Icon Name="IconName.PlusLg" Size="IconSize.x5" Class="green" /> Ajouter &nbsp;
+                                        </a>
+                                        <a href="admin/education" class="Admin-Action-Button">
+                                            <Icon Name="IconName.Pencil" Size="IconSize.x6" Class="orange" /> Modifier
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 box offset-1" id="Admin-Object-History">
+                                <div class="important-text fs-3">Actions récentes</div> <br />
+                                @if (history.Count == 0)
+                                {
+                                    <div>Aucune action récente</div>
+                                }
+                                else
+                                {
+                                    <Virtualize Items="history" Context="ht">
+                                        <AdminObjectHistory Event=@ht />
+                                    </Virtualize>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
+            </main>
+        </Authorized>
 
-                <div class="col-6 box offset-1" id="Admin-Object-History">
-                    <div class="important-text fs-3">Actions récentes</div> <br />
-                        @if(history.Count == 0)
-                        {
-                            <div>Aucune action récente</div>
-                        }
-                        else
-                        {
-                            <Virtualize Items="history" Context="ht">
-                                <AdminObjectHistory Event=@ht />
-                            </Virtualize>
-                        }
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+    </AuthorizeView>
+</CascadingAuthenticationState>
 
 @code {
     private string ProjectCount = "0";
@@ -115,8 +133,18 @@
     private string VisitCount = "0";
     private List<DataHistory> history = new List<DataHistory>();
 
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        //redirect to home if not authenticated
+        if (authenticationState?.User?.Identity == null || !authenticationState.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+
         ProjectCount = _api.GetProjectsCountAsync().Result.ToString();
         ExperienceCount = _api.GetExperiencesCountAsync().Result.ToString();
         EducationCount = _api.GetFormationsCountAsync().Result.ToString();
@@ -127,5 +155,12 @@
             history = new List<DataHistory>();
         }
         history = history.OrderByDescending(item => item.CreationDate).ToList();
+    }
+
+    private async Task Logout()
+    {
+        await SignInManager.SignOutAsync();
+        // Redirige l'utilisateur vers la page d'accueil ou de connexion après la déconnexion
+        NavigationManager.NavigateTo("/", true);
     }
 }

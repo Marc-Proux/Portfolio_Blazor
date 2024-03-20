@@ -1,11 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Portfolio.Model;
 using Portfolio.Model.Data;
 using Portfolio.Model.Data.Interface;
 using Portfolio.Model.Smtp;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Portfolio.Data;
+using Portfolio.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("PortfolioContextConnection") ?? throw new InvalidOperationException("Connection string 'PortfolioContextConnection' not found.");
+
+builder.Services.AddDbContext<PortfolioContext>(options => options.UseSqlite(connectionString));
+
+builder.Services.AddDefaultIdentity<PortfolioUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<PortfolioContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -64,10 +73,21 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseSession();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+//redirect registration to home page
+app.MapGet("/Identity/Account/Register", (HttpContext context) =>
+{
+    context.Response.Redirect("/");
+    return Task.CompletedTask;
+});
 
 app.Run();
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>7db56e1a-9503-45cb-8d9b-8cd38e32b8a7</UserSecretsId>
@@ -10,27 +10,35 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Blazor.Bootstrap" Version="1.10.5" />
     <PackageReference Include="BlazorTypewriter" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
     <PackageReference Include="Markdig" Version="0.34.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="RazorComponents\" />
     <None Remove="Data\" />
-    <None Remove="Data\Models\" />
-    <None Remove="Data\Models\Interface\" />
-    <None Remove="Data\Experiences\" />
-    <None Remove="Data\Projects\" />
     <None Remove="Pages\Public\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RazorComponents\" />
     <Folder Include="wwwroot\js\" />
-    <Folder Include="Data\" />
-    <Folder Include="Data\Models\Interface\" />
-    <Folder Include="Data\Experiences\" />
-    <Folder Include="Data\Projects\" />
     <Folder Include="Pages\Public\" />
   </ItemGroup>
   <ItemGroup>
